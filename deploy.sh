@@ -24,7 +24,6 @@ cp $LIB_DIR/postgresql-42.7.4.jar $BUILD_DIR/WEB-INF/lib/
 cp -r $WEB_DIR/* $BUILD_DIR/
 
 
-
 # Générer le fichier .war dans le dossier build
 cd $BUILD_DIR || exit
 jar -cvf $APP_NAME.war *
