@@ -1,0 +1,95 @@
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                      https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+  version="6.0">
+
+    <display-name>Afficher</display-name>
+
+    <!-- <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping> -->
+
+    <servlet>
+        <servlet-name>vol</servlet-name>
+        <servlet-class>controllers.VolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>vol</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>rechercheVols</servlet-name>
+        <servlet-class>controllers.RechercheVolsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>rechercheVols</servlet-name>
+        <url-pattern>/rechercheVols</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GestionAvion</servlet-name>
+        <servlet-class>controllers.AdminServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GestionAvion</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>GestionAvion</servlet-name>
+        <url-pattern>/homeAdmin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Detail</servlet-name>
+        <servlet-class>controllers.DetailVolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Detail</servlet-name>
+        <url-pattern>/detailVol</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>reservationVol</servlet-name>
+        <servlet-class>controllers.ReservationVolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>reservationVol</servlet-name>
+        <url-pattern>/reservation</url-pattern>
+    </servlet-mapping>
+    
+
+    <servlet>
+        <servlet-name>AdminVol</servlet-name>
+        <servlet-class>controllers.VolAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminVol</servlet-name>
+        <url-pattern>/volAdmin</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>AjoutVol</servlet-name>
+        <servlet-class>controllers.FormAjoutVolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjoutVol</servlet-name>
+        <url-pattern>/ajoutVol</url-pattern>
+    </servlet-mapping>
+
+    <!-- <servlet>
+        <servlet-name>VolAjoute</servlet-name>
+        <servlet-class>controllers.AjoutVolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VolAjoute</servlet-name>
+        <url-pattern>/ajouterVol</url-pattern>
+    </servlet-mapping> -->
+    
+</web-app>
+
