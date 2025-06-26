@@ -91,5 +91,23 @@
       <url-pattern>/paiement</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+      <servlet-name>panierReservation</servlet-name>
+      <servlet-class>controllers.PanierReservationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>panierReservation</servlet-name>
+      <url-pattern>/panier</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+      <servlet-name>annuleReservation</servlet-name>
+      <servlet-class>controllers.AnnulerReservationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>annuleReservation</servlet-name>
+      <url-pattern>/annuler</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 

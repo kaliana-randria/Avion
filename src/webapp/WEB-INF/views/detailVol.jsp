@@ -15,6 +15,16 @@
     <title>Details Vol</title>
 </head>
 <body>
+    <header id="main-header">
+        <nav>
+            <ul>
+                <li><a href="accueil">Accueil</a></li>
+                <li><a href="panier">Panier_Reservation</a></li>
+                <li><a href="admin">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+    
     <div class="container">
         <h1>Details du Vol</h1>
         <p><strong>Vol :</strong> <%= vol.getId_vol()%></p>
@@ -41,5 +51,11 @@
 
         </p>
     </div>
+
+    <footer id="main-footer">
+        <div>
+            <p>&copy; 2025 - Gestion de vols - Projet Web Dynamique</p>
+        </div>
+    </footer>
 </body>
 </html>

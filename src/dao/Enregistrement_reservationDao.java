@@ -3,6 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import connection.Maconnexion;
 import models.Enregistrement_reservation;
@@ -109,6 +111,75 @@ public class Enregistrement_reservationDao {
             throw new Exception("Aucune réservation trouvée pour la référence : " + reference);
         }
         return id;
+    }
+
+    public List<Enregistrement_reservation> findAll() throws Exception {
+        List<Enregistrement_reservation> liste = new ArrayList<>();
+        Connection con = Maconnexion.getConnexion();
+        String sql = "SELECT * FROM enregistrement_reservation";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Enregistrement_reservation e = new Enregistrement_reservation();
+            e.setId_enregistrement(rs.getInt("id_enregistrement"));
+            e.setId_reservation(rs.getInt("id_reservation"));
+            e.setNum_reference(rs.getString("num_reference"));
+            e.setEst_annule(rs.getBoolean("est_annule"));
+            liste.add(e);
+        }
+        rs.close();
+        ps.close();
+        con.close();
+        return liste;
+    }
+
+    public Enregistrement_reservation findById(int idEnregistrement) throws Exception {
+        Enregistrement_reservation enreg = null;
+        String sql = "SELECT * FROM enregistrement_reservation WHERE id_enregistrement = ?";
+
+        try (Connection connection = Maconnexion.getConnexion();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idEnregistrement);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    enreg = new Enregistrement_reservation();
+                    enreg.setId_enregistrement(rs.getInt("id_enregistrement"));
+                    enreg.setId_reservation(rs.getInt("id_reservation"));
+                    enreg.setNum_reference(rs.getString("num_reference"));
+                    enreg.setEst_annule(rs.getBoolean("est_annule"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+        return enreg;
+    }
+
+    public void update(Enregistrement_reservation enreg) throws Exception {
+        String sql = "UPDATE enregistrement_reservation SET id_reservation = ?, num_reference = ?, est_annule = ? WHERE id_enregistrement = ?";
+
+        try (Connection connection = Maconnexion.getConnexion();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, enreg.getId_reservation());
+            pstmt.setString(2, enreg.getNum_reference());
+            pstmt.setBoolean(3, enreg.isEst_annule());
+            pstmt.setInt(4, enreg.getId_enregistrement());
+
+            int rowsUpdated = pstmt.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                throw new Exception(
+                        "Mise à jour échouée, aucun enregistrement trouvé avec id : " + enreg.getId_enregistrement());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 }

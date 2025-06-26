@@ -67,4 +67,26 @@ public class Classe_volDao {
         return result;
     }
 
+    public Classe_vol findById(int id) throws Exception {
+        Connection con = Maconnexion.getConnexion();
+        String sql = "SELECT * FROM classe_vol WHERE id_classe_vol = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+
+        Classe_vol classeVol = null;
+        if (rs.next()) {
+            classeVol = new Classe_vol();
+            classeVol.setId_classe_vol(rs.getInt("id_classe_vol"));
+            classeVol.setId_classe(rs.getInt("id_classe"));
+            classeVol.setId_vol(rs.getInt("id_vol"));
+        }
+
+        rs.close();
+        ps.close();
+        con.close();
+
+        return classeVol;
+    }
+
 }

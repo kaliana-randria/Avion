@@ -153,4 +153,49 @@ public class Param_volDao {
         return p;
     }
 
+    // Param_volDao.java
+    public Param_vol findById(int id) throws Exception {
+        Connection con = Maconnexion.getConnexion();
+        String sql = "SELECT * FROM param_vol WHERE id_param_vol = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+
+        Param_vol param = null;
+        if (rs.next()) {
+            param = new Param_vol();
+            param.setId_param_vol(rs.getInt("id_param_vol"));
+            param.setId_classe_vol(rs.getInt("id_classe_vol"));
+            param.setPrix(rs.getDouble("prix"));
+            param.setQuantite(rs.getInt("quantite"));
+            param.setDate_limite_paiement(rs.getTimestamp("date_limite_paiement").toLocalDateTime());
+            param.setEn_cours(rs.getBoolean("en_cours"));
+        }
+
+        rs.close();
+        ps.close();
+        con.close();
+
+        return param;
+    }
+
+    public void updateQuantite(Param_vol param) throws Exception {
+        String sql = "UPDATE param_vol SET quantite = ? WHERE id_param_vol = ?";
+
+        try (Connection connection = Maconnexion.getConnexion();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, param.getQuantite());
+            pstmt.setInt(2, param.getId_param_vol());
+
+            int updatedRows = pstmt.executeUpdate();
+
+            if (updatedRows == 0) {
+                throw new Exception("Aucun param_vol trouvé avec l'id : " + param.getId_param_vol());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }

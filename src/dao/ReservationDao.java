@@ -63,4 +63,25 @@ public class ReservationDao {
         con.close();
     }
 
+    public Reservation findById(int id) throws Exception {
+        Connection con = Maconnexion.getConnexion();
+        String sql = "SELECT * FROM reservation WHERE id_reservation = ?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        Reservation r = null;
+        if (rs.next()) {
+            r = new Reservation();
+            r.setId_reservation(rs.getInt("id_reservation"));
+            r.setId_param_vol(rs.getInt("id_param_vol"));
+            r.setQuantite(rs.getInt("quantite"));
+            r.setDate_reservation(rs.getTimestamp("date_reservation").toLocalDateTime());
+            r.setEst_payer(rs.getBoolean("est_payer"));
+        }
+        rs.close();
+        ps.close();
+        con.close();
+        return r;
+    }
+
 }
