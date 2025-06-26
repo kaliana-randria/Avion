@@ -115,7 +115,7 @@ CREATE TABLE reservation (
     quantite INT,
     est_payer BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (id_param_vol) REFERENCES param_vol(id_param_vol)
-); -- crud
+); 
 
 CREATE TABLE enregistrement_reservation (
     id_enregistrement SERIAL PRIMARY KEY,
@@ -123,7 +123,7 @@ CREATE TABLE enregistrement_reservation (
     num_reference VARCHAR(10),
     est_annule BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (id_reservation) REFERENCES reservation(id_reservation)
-); -- insertion depend du reservation
+);
 
 CREATE TABLE admin (
     id_admin SERIAL PRIMARY KEY,
