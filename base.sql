@@ -50,7 +50,7 @@ CREATE TABLE vol (
     id_statut_vol INT DEFAULT 1,
     FOREIGN KEY (id_avion) REFERENCES avion(id_avion),
     FOREIGN KEY (id_statut_vol) REFERENCES statut_vol(id_statut_vol)
-); -- dans fonction crud
+); 
 
 CREATE TABLE classe (
     id_classe SERIAL PRIMARY KEY,
@@ -70,7 +70,11 @@ CREATE TABLE classe_vol (
     nbr_place INT,
     FOREIGN KEY (id_vol) REFERENCES vol(id_vol),
     FOREIGN KEY (id_classe) REFERENCES classe(id_classe)
-); -- depend du vol (donc est ce dans crud)
+); 
+
+INSERT INTO classe_vol (id_vol, id_classe, nbr_place) VALUES
+(1, 1, 100),
+(1, 2, 20);
 
 CREATE TABLE param_vol (
     id_param_vol SERIAL PRIMARY KEY,
@@ -80,7 +84,18 @@ CREATE TABLE param_vol (
     date_limite_paiement TIMESTAMP,
     en_cours BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (id_classe_vol) REFERENCES classe_vol(id_classe_vol)
-); -- depend du classe_vol
+); 
+
+INSERT INTO param_vol (id_classe_vol, prix, quantite, date_limite_paiement) VALUES
+(1, 100, 10, '2025-06-27 07:00:00'),
+(1, 150, 20, '2025-06-28 00:00:00'),
+(1, 200, 15, '2025-06-29 07:00:00'),
+(1, 300, 30, '2025-06-30 07:00:00'),
+(1, 350, 10, '2025-07-01 07:00:00'),
+(1, 400, 15, '2025-07-02 07:00:00'),
+
+(2, 150, 5, '2025-06-27 07:00:00'),
+(2, 300, 15, '2025-06-28 00:00:00');
 
 CREATE TABLE reservation (
     id_reservation SERIAL PRIMARY KEY,

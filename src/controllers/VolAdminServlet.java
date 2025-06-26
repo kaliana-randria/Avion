@@ -1,13 +1,9 @@
 package controllers;
 
-import dao.Statut_volDao;
-import dao.TarifDao;
-import dao.VolDao;
+import dao.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
-import models.Statuts_vol;
-import models.Tarifs;
-import models.Vols;
+import models.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,105 +11,105 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class VolAdminServlet extends HttpServlet {
+
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
         PrintWriter out = res.getWriter();
+
         String action = req.getParameter("action");
-        // int idVol = req.getParameter("idVol") != null ? Integer.parseInt(req.getParameter("idVol")) : -1;
         int idVol = -1;
-        String idVolStr = req.getParameter("idVol");
-        if (idVolStr != null) {
-            idVol = Integer.parseInt(idVolStr);
+
+        if (req.getParameter("idVol") != null) {
+            try {
+                idVol = Integer.parseInt(req.getParameter("idVol"));
+            } catch (NumberFormatException e) {
+                req.setAttribute("error", "ID invalide");
+                req.getRequestDispatcher("/WEB-INF/views/homeAdmin.jsp").forward(req, res);
+                return;
+            }
         }
-        VolDAO dao = new VolDAO();
-        Vols volModel = new Vols(idVol);
-        dao.setVols(volModel);
 
-        TarifDAO tarifDao = new TarifDAO();
-        Tarifs tarifModel = new Tarifs(idVol);
-        tarifDao.setTarifs(tarifModel);
-
-        Statut_volDAO statDao = new Statut_volDAO();
+        VolDao volDao = new VolDao();
+        Statut_volDao statutDao = new Statut_volDao();
+        Param_volDao paramDao = new Param_volDao();
+        AvionDao avionDao = new AvionDao();
 
         try {
             if ("delete".equals(action)) {
-                dao.delete();
+                volDao.setVol(new Vol(idVol));
+                volDao.delete();
                 res.sendRedirect("volAdmin");
-            } 
-            else if ("update".equals(action)) {
-                Vols vol = dao.findById(idVol);
-                req.setAttribute("volToUpdate", vol);
-                List<Statuts_vol> statutVols = statDao.findAll();
-                req.setAttribute("statutsVol", statutVols);
-                RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/formVol.jsp");
-                dispatcher.forward(req, res);
-            } 
-            else if ("tarif".equals(action)) {
+
+            } else if ("update".equals(action)) {
+                Vol volToUpdate = volDao.findById(idVol);
+                req.setAttribute("volToUpdate", volToUpdate);
+                req.setAttribute("statutVol", statutDao.findAll());
+                req.setAttribute("avions", avionDao.findAll());
+                req.setAttribute("listes", volDao.findAll());
+                req.getRequestDispatcher("/WEB-INF/views/formVol.jsp").forward(req, res);
+
+            } else if ("tarif".equals(action)) {
                 req.setAttribute("idVol", idVol);
-                List<Tarifs> tarif = tarifDao.findByVolId();
-                req.setAttribute("TarifList", tarif);
-                Vols vol = dao.findById(idVol);
-                req.setAttribute("volDetail", vol);
-                RequestDispatcher tarifDispatcher = req.getRequestDispatcher("/WEB-INF/views/listTarif.jsp");
-                tarifDispatcher.forward(req, res);
-            } 
-            else {
-                List<Vols> vols = dao.findAll();
+                req.setAttribute("TarifList", paramDao.findByVolId(idVol));
+                req.setAttribute("volDetail", volDao.findById(idVol));
+                req.getRequestDispatcher("/WEB-INF/views/listTarif.jsp").forward(req, res);
+
+            } else {
+                List<Vol> vols = volDao.findAll();
                 req.setAttribute("listes", vols);
                 req.getRequestDispatcher("/WEB-INF/views/homeAdmin.jsp").forward(req, res);
             }
+
         } catch (Exception e) {
-            out.println(e.getMessage());
             e.printStackTrace();
             req.setAttribute("error", e.getMessage());
+            out.println("error" + e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/homeAdmin.jsp").forward(req, res);
         }
+
     }
 
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        PrintWriter out = res.getWriter();
-        try {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
 
+        PrintWriter out = res.getWriter();
+
+        try {
             String idVolStr = req.getParameter("id_vol");
-            String numeroVol = req.getParameter("numero_vol");
-            String compagnie = req.getParameter("compagnie");
+            String avionStr = req.getParameter("id_avion");
             String villeDepart = req.getParameter("ville_depart");
             String villeArrivee = req.getParameter("ville_arrivee");
             String dateDepartStr = req.getParameter("date_depart");
             String dateArriveeStr = req.getParameter("date_arrivee");
             String statutVolStr = req.getParameter("id_statut_vol");
-            String avionStr = req.getParameter("id_avion");
 
             LocalDateTime dateDepart = LocalDateTime.parse(dateDepartStr);
             LocalDateTime dateArrivee = LocalDateTime.parse(dateArriveeStr);
-            int idStatutVol = Integer.parseInt(statutVolStr);
             int idAvion = Integer.parseInt(avionStr);
+            int idStatutVol = Integer.parseInt(statutVolStr);
 
-            Vols vol = new Vols(
-                numeroVol, compagnie, villeDepart, villeArrivee,
-                dateDepart, dateArrivee, idStatutVol, idAvion
-            );
+            Vol vol = new Vol(idAvion, villeDepart, villeArrivee,
+                    dateDepart, dateArrivee, idStatutVol);
 
-            VolDAO dao = new VolDAO();
+            VolDao dao = new VolDao();
 
-            // Si id_vol est présent => UPDATE
             if (idVolStr != null && !idVolStr.trim().isEmpty()) {
-                int idVol = Integer.parseInt(idVolStr);
-                vol.setId_vol(idVol);
+                vol.setId_vol(Integer.parseInt(idVolStr));
                 dao.update(vol);
             } else {
-                dao.setVols(vol);
+                dao.setVol(vol);
                 dao.save();
             }
 
             res.sendRedirect("volAdmin");
 
         } catch (Exception e) {
-            out.println(e.getMessage());
             e.printStackTrace();
-            req.setAttribute("error", e.getMessage());
+            req.setAttribute("error", "Erreur : " + e.getMessage());
+            out.println("error" + e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/formVol.jsp").forward(req, res);
         }
     }
-
 }

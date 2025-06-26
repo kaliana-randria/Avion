@@ -5,6 +5,12 @@ public class Avion {
     private int id_compagnie;
     private String nom_avion;
     private String modele;
+    public Avion(int id_avion, int id_compagnie, String nom_avion, String modele) {
+        this.id_avion = id_avion;
+        this.id_compagnie = id_compagnie;
+        this.nom_avion = nom_avion;
+        this.modele = modele;
+    }
     public Avion() {
     }
     public int getId_avion() {

@@ -1,6 +1,14 @@
 src/connection/Maconnexion.java
+src/dao/Classe_volDao.java
+src/dao/AvionDao.java
+src/dao/Statut_volDao.java
+src/dao/CompagnieDao.java
+src/dao/Enregistrement_reservationDao.java
+src/dao/Param_volDao.java
 src/dao/AdminDao.java
+src/dao/ClasseDao.java
 src/dao/VolDao.java
+src/models/ClasseTarifDispo.java
 src/models/Admin.java
 src/models/Reservation.java
 src/models/Enregistrement_reservation.java
@@ -11,5 +19,9 @@ src/models/Avion.java
 src/models/Classe_vol.java
 src/models/Vol.java
 src/models/Param_vol.java
+src/controllers/DetailVolServlet.java
 src/controllers/AdminServlet.java
+src/controllers/VolAdminServlet.java
+src/controllers/FormAjoutVolServlet.java
+src/controllers/RechercheVolServlet.java
 src/controllers/VolServlet.java

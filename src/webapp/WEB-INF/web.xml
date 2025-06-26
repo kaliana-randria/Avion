@@ -20,6 +20,33 @@
     </servlet-mapping>
 
     <servlet>
+      <servlet-name>rechercheVols</servlet-name>
+      <servlet-class>controllers.RechercheVolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>rechercheVols</servlet-name>
+      <url-pattern>/recherche</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+      <servlet-name>Detail</servlet-name>
+      <servlet-class>controllers.DetailVolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>Detail</servlet-name>
+      <url-pattern>/detailVol</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+      <servlet-name>reservationVol</servlet-name>
+      <servlet-class>controllers.ReservationVolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>reservationVol</servlet-name>
+      <url-pattern>/reservation</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
       <servlet-name>AvionAdmin</servlet-name>
       <servlet-class>controllers.AdminServlet</servlet-class>
     </servlet>
@@ -37,5 +64,14 @@
       <url-pattern>/volAdmin</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+      <servlet-name>AjoutVol</servlet-name>
+      <servlet-class>controllers.FormAjoutVolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>AjoutVol</servlet-name>
+      <url-pattern>/ajoutVol</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 

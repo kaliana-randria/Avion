@@ -186,56 +186,75 @@ public class VolDao {
         }
     }
 
-    public List<Vol> rechercheMulticritere(Date date_depart, String depart, String arrivee, String compagnie) throws Exception {
-        List<Vol> resultats = new ArrayList<>();
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+    public List<Vol> rechercheMulticritere(Date date_depart, String compagnie, String depart, String arrivee) throws Exception {
+    List<Vol> resultats = new ArrayList<>();
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
 
-        try {
-            con = Maconnexion.getConnexion();
-            StringBuilder query = new StringBuilder("SELECT * FROM vol WHERE 1=1");
-            List<Object> params = new ArrayList<>();
+    try {
+        con = Maconnexion.getConnexion();
 
-            if (depart != null && !depart.isEmpty()) {
-                query.append(" AND ville_depart LIKE ?");
-                params.add("%" + depart + "%");
-            }
-            if (arrivee != null && !arrivee.isEmpty()) {
-                query.append(" AND ville_arrivee LIKE ?");
-                params.add("%" + arrivee + "%");
-            }
+        StringBuilder query = new StringBuilder(
+            "SELECT v.* FROM vol v " +
+            "JOIN avion a ON v.id_avion = a.id_avion " +
+            "JOIN compagnie c ON a.id_compagnie = c.id_compagnie " +
+            "WHERE 1=1"
+        );
 
-            ps = con.prepareStatement(query.toString());
+        List<Object> params = new ArrayList<>();
 
-            for (int i = 0; i < params.size(); i++) {
-                ps.setObject(i + 1, params.get(i));
-            }
-
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Vol v = new Vol();
-                v.setId_vol(rs.getInt("id_vol"));
-                v.setVille_depart(rs.getString("ville_depart"));
-                v.setVille_arrivee(rs.getString("ville_arrivee"));
-                v.setDate_depart(rs.getTimestamp("date_depart").toLocalDateTime());
-                v.setDate_arrivee(rs.getTimestamp("date_arrivee").toLocalDateTime());
-                v.setDuree(rs.getInt("duree"));
-                v.setId_statut_vol(rs.getInt("id_statut_vol"));
-                v.setId_avion(rs.getInt("id_avion"));
-                resultats.add(v);
-            }
-
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (con != null) con.close();
+        if (date_depart != null) {
+            query.append(" AND DATE(v.date_depart) = ?");
+            params.add(new java.sql.Date(date_depart.getTime()));
         }
 
-        return resultats;
+        if (compagnie != null && !compagnie.isEmpty()) {
+            query.append(" AND LOWER(c.nom_compagnie) LIKE ?");
+            params.add("%" + compagnie.toLowerCase() + "%");
+        }
+
+        if (depart != null && !depart.isEmpty()) {
+            query.append(" AND LOWER(v.ville_depart) LIKE ?");
+            params.add("%" + depart.toLowerCase() + "%");
+        }
+
+        if (arrivee != null && !arrivee.isEmpty()) {
+            query.append(" AND LOWER(v.ville_arrivee) LIKE ?");
+            params.add("%" + arrivee.toLowerCase() + "%");
+        }
+
+        ps = con.prepareStatement(query.toString());
+
+        for (int i = 0; i < params.size(); i++) {
+            ps.setObject(i + 1, params.get(i));
+        }
+
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Vol v = new Vol();
+            v.setId_vol(rs.getInt("id_vol"));
+            v.setVille_depart(rs.getString("ville_depart"));
+            v.setVille_arrivee(rs.getString("ville_arrivee"));
+            v.setDate_depart(rs.getTimestamp("date_depart").toLocalDateTime());
+            v.setDate_arrivee(rs.getTimestamp("date_arrivee").toLocalDateTime());
+            v.setDuree(rs.getInt("duree"));
+            v.setId_statut_vol(rs.getInt("id_statut_vol"));
+            v.setId_avion(rs.getInt("id_avion"));
+            resultats.add(v);
+        }
+
+    } catch (Exception e) {
+        throw e;
+    } finally {
+        if (rs != null) rs.close();
+        if (ps != null) ps.close();
+        if (con != null) con.close();
     }
+
+    return resultats;
+}
+
 
 }

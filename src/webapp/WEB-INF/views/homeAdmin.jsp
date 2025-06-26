@@ -19,7 +19,7 @@
                 <th>ville_arrivee</th>
                 <th>date_depart</th>
                 <th>date_arrivee</th>
-                <th>duree</th>
+                <th>duree (min)</th>
                 <th>id_statut_vol</th>
                 <th>action</th>
             </tr>

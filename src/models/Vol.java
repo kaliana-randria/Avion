@@ -11,6 +11,18 @@ public class Vol {
     private LocalDateTime date_arrivee;
     private int duree;
     private int id_statut_vol;
+    public Vol(int id_avion, String ville_depart, String ville_arrivee, LocalDateTime date_depart,
+            LocalDateTime date_arrivee, int id_statut_vol) {
+        this.id_avion = id_avion;
+        this.ville_depart = ville_depart;
+        this.ville_arrivee = ville_arrivee;
+        this.date_depart = date_depart;
+        this.date_arrivee = date_arrivee;
+        this.id_statut_vol = id_statut_vol;
+    }
+    public Vol(int id_vol) {
+        this.id_vol = id_vol;
+    }
     public Vol(int id_vol, int id_avion, String ville_depart, String ville_arrivee, LocalDateTime date_depart,
             LocalDateTime date_arrivee, int duree, int id_statut_vol) {
         this.id_vol = id_vol;

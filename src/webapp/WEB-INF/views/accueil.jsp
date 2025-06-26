@@ -47,8 +47,8 @@
                     <td><%= vol.getId_avion() %></td>
                     <td><%= vol.getVille_depart() %></td>
                     <td><%= vol.getVille_arrivee() %></td>
-                    <td><%= vol.getDate_depart().toLocalDate() %></td>
-                    <td><%= vol.getDate_arrivee().toLocalDate() %></td>
+                    <td><%= vol.getDate_depart()%></td>
+                    <td><%= vol.getDate_arrivee()%></td>
                     <td><%= vol.getDuree() %></td>
                     <td><%= vol.getId_statut_vol() %></td>
                     <td><a href="detailVol?action=detail&idVol=<%= vol.getId_vol() %>">Voir details</a></td>

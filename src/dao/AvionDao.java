@@ -8,30 +8,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connection.Maconnexion;
-import models.Statut_vol;
+import models.Avion;
 
-public class Statut_volDao {
-
-    public List<Statut_vol> findAll() throws Exception {
+public class AvionDao {
+        public List<Avion> findAll() throws Exception {
         Connection connection = null;
         Statement st = null;
         ResultSet rs = null;
         try {
             connection = Maconnexion.getConnexion();
-            List<Statut_vol> StatutVolsList = new ArrayList<>();
+            List<Avion> avionList = new ArrayList<>();
             st = connection.createStatement();
-            rs = st.executeQuery("SELECT * FROM statut_vol");
-            Statut_vol Statutvols;
+            rs = st.executeQuery("SELECT * FROM avion");
+            Avion avion;
             while (rs.next()) {
-                Statutvols = new Statut_vol();
+                avion = new Avion();
+                
+                avion.setId_avion(rs.getInt("id_avion"));
+                avion.setId_compagnie(rs.getInt("id_compagnie"));
+                avion.setNom_avion(rs.getString("nom_avion"));
+                avion.setModele(rs.getString("modele"));
 
-                Statutvols.setId_statut_vol(rs.getInt("id_statut_vol"));
-                Statutvols.setStatut(rs.getString("statut"));
-
-                StatutVolsList.add(Statutvols);
+                avionList.add(avion);
             }
-        
-            return StatutVolsList;
+
+            return avionList;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -43,26 +44,30 @@ public class Statut_volDao {
         }
     }
 
-    public Statut_vol findById(int idStatut) throws Exception {
+    public Avion findById(int idAvion) throws Exception {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Statut_vol statut_vol = null;
+        Avion avions = null;
 
         try {
             conn = Maconnexion.getConnexion();
-            String sql = "SELECT * FROM statut_vol WHERE id_statut_vol = ?";
+            String sql = "SELECT * FROM avion WHERE id_avion = ?";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, idStatut);
+            stmt.setInt(1, idAvion);
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                statut_vol = new Statut_vol(
-                    rs.getInt("id_statut_vol"),
-                    rs.getString("statut")
+                avions = new Avion(
+                    rs.getInt("id_avion"),
+                    rs.getInt("id_compagnie"),
+                    rs.getString("nom_avion"),
+                    rs.getString("modele")
                 );
             }
-            return statut_vol;
+            
+            return avions;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
