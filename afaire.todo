@@ -1,0 +1,56 @@
+    - AVION
+        - idAvion (PK)
+        - idCompagnie (FK → Compagnie)
+        - nomAvion
+        - modele
+
+    - COMPAGNIE
+        - idCompagnie (PK)
+        - nomCompagnie
+
+    - VOL
+        - idVol (PK)
+        - idAvion (FK)
+        - villeDepart
+        - villeArrivee
+        - dateDepart
+        - dateArrivee
+        - duree
+        - statutVol
+
+    - CLASSE
+        - idClasse (PK)
+        - nomClasse (ex: Economique, Business, etc.)
+
+    - CLASSE_VOL
+        - idClasseVol (PK)
+        - idVol (FK → Vol)
+        - idClasse (FK → Classe)               
+        - nbrPlace
+
+    - PARAM_VOL
+        - idParamVol (PK)
+        - idClasseVol (FK → ClasseVol)
+        - prix
+        - quantite
+        - dateLimitePaiement
+        - enCours BOOLEAN
+
+    - RESERVATION
+        - idReservation (PK)
+        - dateReservation
+        - idParamVol (FK → ParamVol)
+        - quantite
+        - est_payer (boolean)
+
+    - ENREGISTREMENT_RESERVATION
+        - id enregistrement
+        - idReservation (FK → Reservation)
+        - num reference
+        - estAnnule (BOOLEAN)
+
+    - ADMIN
+        - idAdmin (PK)
+        - nom 
+        - email
+        - password
