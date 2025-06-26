@@ -47,6 +47,15 @@
     </servlet-mapping>
 
     <servlet>
+      <servlet-name>reserve</servlet-name>
+      <servlet-class>controllers.ReserverServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>reserve</servlet-name>
+      <url-pattern>/reserver</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
       <servlet-name>AvionAdmin</servlet-name>
       <servlet-class>controllers.AdminServlet</servlet-class>
     </servlet>
@@ -71,6 +80,15 @@
     <servlet-mapping>
       <servlet-name>AjoutVol</servlet-name>
       <url-pattern>/ajoutVol</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+      <servlet-name>paiementReservation</servlet-name>
+      <servlet-class>controllers.PaiementReservationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>paiementReservation</servlet-name>
+      <url-pattern>/paiement</url-pattern>
     </servlet-mapping>
 
 </web-app>

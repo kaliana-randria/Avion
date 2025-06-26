@@ -28,13 +28,13 @@
         <p>
             Faire une reservation :
 
-            <% for (ClasseTarifDispo item : tarifsDispo) { %>
+            <% for (ClasseTarifDispo tarifDispo : tarifsDispo) { %>
                 <p>
-                    <strong>Classe :</strong> <%= item.getClasse().getNom_classe() %><br>
-                    Tarif en cours : <%= item.getParamVol().getPrix() %> Ar<br>
-                    Quantite dispo : <%= item.getRestePlace() %><br>
-                    <a class="btn" href="reservation?action=<%= item.getClasse().getNom_classe() %>&idVol=<%= vol.getId_vol()%>">
-                        Reserver en <%= item.getClasse().getNom_classe() %>
+                    <strong>Classe :</strong> <%= tarifDispo.getClasse().getNom_classe() %><br>
+                    Tarif en cours : <%= tarifDispo.getParamVol().getPrix() %> Ar<br>
+                    Quantite dispo : <%= tarifDispo.getRestePlace() %><br>
+                    <a class="btn" href="reservation?action=<%= tarifDispo.getClasse().getNom_classe() %>&idVol=<%= vol.getId_vol()%>">
+                        Reserver en <%= tarifDispo.getClasse().getNom_classe() %>
                     </a>
                 </p>
             <% } %>

@@ -3,6 +3,7 @@ src/dao/Classe_volDao.java
 src/dao/AvionDao.java
 src/dao/Statut_volDao.java
 src/dao/CompagnieDao.java
+src/dao/ReservationDao.java
 src/dao/Enregistrement_reservationDao.java
 src/dao/Param_volDao.java
 src/dao/AdminDao.java
@@ -20,8 +21,11 @@ src/models/Classe_vol.java
 src/models/Vol.java
 src/models/Param_vol.java
 src/controllers/DetailVolServlet.java
+src/controllers/ReserverServlet.java
+src/controllers/ReservationVolServlet.java
 src/controllers/AdminServlet.java
 src/controllers/VolAdminServlet.java
 src/controllers/FormAjoutVolServlet.java
 src/controllers/RechercheVolServlet.java
+src/controllers/PaiementReservationServlet.java
 src/controllers/VolServlet.java

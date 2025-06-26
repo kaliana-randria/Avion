@@ -32,4 +32,39 @@ public class Classe_volDao {
         return liste;
     }
 
+    public Classe_vol findByVolAndClasse(int idVol, int idClasse) throws Exception {
+        Classe_vol result = null;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = Maconnexion.getConnexion();
+            String sql = "SELECT * FROM classe_vol WHERE id_vol = ? AND id_classe = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, idVol);
+            ps.setInt(2, idClasse);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                result = new Classe_vol();
+                result.setId_classe_vol(rs.getInt("id_classe_vol"));
+                result.setId_vol(rs.getInt("id_vol"));
+                result.setId_classe(rs.getInt("id_classe"));
+                result.setNbr_place(rs.getInt("nbr_place"));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rs != null)
+                rs.close();
+            if (ps != null)
+                ps.close();
+            if (con != null)
+                con.close();
+        }
+
+        return result;
+    }
+
 }

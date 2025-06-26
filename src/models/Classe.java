@@ -3,6 +3,10 @@ package models;
 public class Classe {
     private int id_classe;
     private String nom_classe;
+    public Classe(int id_classe, String nom_classe) {
+        this.id_classe = id_classe;
+        this.nom_classe = nom_classe;
+    }
     public Classe() {
     }
     public int getId_classe() {
