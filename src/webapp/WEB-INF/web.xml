@@ -6,7 +6,36 @@
 
     <display-name>Afficher</display-name>
 
-    
+    <servlet>
+      <servlet-name>volAccueil</servlet-name>
+      <servlet-class>controllers.VolServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>volAccueil</servlet-name>
+      <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+      <servlet-name>volAccueil</servlet-name>
+      <url-pattern>/accueil</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+      <servlet-name>AvionAdmin</servlet-name>
+      <servlet-class>controllers.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>AvionAdmin</servlet-name>
+      <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+      <servlet-name>AdminVol</servlet-name>
+      <servlet-class>controllers.VolAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>AdminVol</servlet-name>
+      <url-pattern>/volAdmin</url-pattern>
+    </servlet-mapping>
     
 </web-app>
 
