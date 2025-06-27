@@ -116,7 +116,6 @@
         <input type="hidden" name="idVol" value="<%= vol.getId_vol() %>">
         <input type="hidden" name="idClasse" value="<%= donneesClasse.getId_classe() %>">
         <p>Nombre personne : <input type="number" name="quantite" min="1"></p>
-        <p><input type="checkbox" name="paiement"> Paiement</p>
 
         <p><input type="submit" value="valider"></p>
 

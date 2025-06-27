@@ -37,7 +37,7 @@ public class PanierReservationServlet extends HttpServlet {
                 Avion avion = avionDao.findById(vol.getId_avion());
                 Compagnie compagnie = compagnieDao.findById(avion.getId_compagnie());
 
-                for (int i = 0; i < resv.getQuantite(); i++) {
+                // for (int i = 0; i < resv.getQuantite(); i++) {
                     PanierDetail detail = new PanierDetail();
                     detail.setIdReservation(resv.getId_reservation());
                     detail.setReference(enr.getNum_reference());
@@ -51,7 +51,7 @@ public class PanierReservationServlet extends HttpServlet {
                     detail.setAnnule(enr.isEst_annule());
 
                     panier.add(detail);
-                }
+                // }
             }
 
             req.setAttribute("panier", panier);

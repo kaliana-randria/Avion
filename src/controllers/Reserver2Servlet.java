@@ -42,12 +42,14 @@ public class Reserver2Servlet extends HttpServlet {
                 reservationDao.save();
 
                 String numReference = enregDao.generateNextReference();
-                Enregistrement_reservation enregistrement = new Enregistrement_reservation();
-                enregistrement.setId_reservation(reservation.getId_reservation());
-                enregistrement.setNum_reference(numReference);
-                enregistrement.setEst_annule(false);
-                enregDao.setEnregReserve(enregistrement);
-                enregDao.save();
+                for (int i = 0; i < reservation.getQuantite(); i++) {
+                    Enregistrement_reservation enregistrement = new Enregistrement_reservation();
+                    enregistrement.setId_reservation(reservation.getId_reservation());
+                    enregistrement.setNum_reference(numReference);
+                    enregistrement.setEst_annule(false);
+                    enregDao.setEnregReserve(enregistrement);
+                    enregDao.save();
+                }
 
                 reste -= aPrendre;
             }
@@ -67,13 +69,17 @@ public class Reserver2Servlet extends HttpServlet {
                 reservationDao.setReserve(reservation2);
                 reservationDao.save();
 
-                String numReference2 = enregDao.generateNextReference();
-                Enregistrement_reservation enregistrement2 = new Enregistrement_reservation();
-                enregistrement2.setId_reservation(reservation2.getId_reservation());
-                enregistrement2.setNum_reference(numReference2);
-                enregistrement2.setEst_annule(false);
-                enregDao.setEnregReserve(enregistrement2);
-                enregDao.save();
+                String numReference2 = enregDao.generateNextReference(); 
+
+                for (int i = 0; i < reservation2.getQuantite(); i++) {
+                    Enregistrement_reservation enregistrement = new Enregistrement_reservation();
+                    enregistrement.setId_reservation(reservation2.getId_reservation());
+                    enregistrement.setNum_reference(numReference2);
+                    enregistrement.setEst_annule(false);
+                    enregDao.setEnregReserve(enregistrement);
+                    enregDao.save();
+                }
+
             }
 
             req.setAttribute("vol", vol);

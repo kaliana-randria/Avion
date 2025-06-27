@@ -46,9 +46,18 @@
       <url-pattern>/reservation</url-pattern>
     </servlet-mapping>
 
-    <servlet>
+    <!-- <servlet>
       <servlet-name>reserve</servlet-name>
       <servlet-class>controllers.ReserverServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>reserve</servlet-name>
+      <url-pattern>/reserver</url-pattern>
+    </servlet-mapping> -->
+
+    <servlet>
+      <servlet-name>reserve</servlet-name>
+      <servlet-class>controllers.Reserver2Servlet</servlet-class>
     </servlet>
     <servlet-mapping>
       <servlet-name>reserve</servlet-name>
@@ -100,9 +109,18 @@
       <url-pattern>/panier</url-pattern>
     </servlet-mapping>
 
-    <servlet>
+    <!-- <servlet>
       <servlet-name>annuleReservation</servlet-name>
       <servlet-class>controllers.AnnulerReservationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>annuleReservation</servlet-name>
+      <url-pattern>/annuler</url-pattern>
+    </servlet-mapping> -->
+
+    <servlet>
+      <servlet-name>annuleReservation</servlet-name>
+      <servlet-class>controllers.AnnulerReservation2Servlet</servlet-class>
     </servlet>
     <servlet-mapping>
       <servlet-name>annuleReservation</servlet-name>
