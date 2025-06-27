@@ -12,12 +12,10 @@ public class ReserverServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         try {
-            // Récupération des données du formulaire
             int idVol = Integer.parseInt(req.getParameter("idVol"));
             int idClasse = Integer.parseInt(req.getParameter("idClasse"));
             int quantite = Integer.parseInt(req.getParameter("quantite"));
 
-            // DAO
             VolDao volDao = new VolDao();
             ClasseDao classeDao = new ClasseDao();
             Classe_volDao classeVolDao = new Classe_volDao();
@@ -60,7 +58,7 @@ public class ReserverServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            req.setAttribute("error", "Erreur lors de la réservation : " + e.getMessage());
+            req.setAttribute("error", "Erreur lors de la reservation : " + e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/accueil.jsp").forward(req, res);
         }
     }

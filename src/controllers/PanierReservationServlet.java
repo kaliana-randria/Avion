@@ -59,7 +59,7 @@ public class PanierReservationServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            req.setAttribute("error", "Erreur lors de l'affichage du panier : " + e.getMessage());
+            req.setAttribute("error", "Erreur lors de l affichage du panier : " + e.getMessage());
             out.println("error" + e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/accueil.jsp").forward(req, res);
         }

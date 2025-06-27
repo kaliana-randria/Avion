@@ -20,7 +20,7 @@ public class PaiementReservationServlet extends HttpServlet {
 
             reservationDao.updatePaiement(idReservation);
 
-            req.setAttribute("message", "Paiement confirmé pour la réservation : " + reference);
+            req.setAttribute("message", "Paiement confirme pour la reservation : " + reference);
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", "Erreur : " + e.getMessage());

@@ -23,7 +23,7 @@ public class ReservationVolServlet extends HttpServlet {
         Enregistrement_reservationDao enregDao = new Enregistrement_reservationDao();
 
         try {
-            String action = req.getParameter("action"); // normalement le nom de la classe (ex: "Economique")
+            String action = req.getParameter("action"); 
             String idVolStr = req.getParameter("idVol");
             int idVol = -1;
             if (idVolStr != null && !idVolStr.isEmpty()) {
@@ -35,12 +35,10 @@ public class ReservationVolServlet extends HttpServlet {
                 Classe classe = classeDao.findByName(action);
 
                 if (vol != null && classe != null) {
-                    // Récupérer la Classe_vol correspondant au vol et classe
                     Classe_vol classeVol = classeVolDao.findByVolAndClasse(idVol, classe.getId_classe());
                     if (classeVol == null) {
-                        req.setAttribute("error", "Aucune classe-vol trouvée pour ce vol et classe.");
+                        req.setAttribute("error", "Aucune classe-vol trouvee pour ce vol et classe.");
                     } else {
-                        // Trouver le param_vol en cours pour cette classe_vol
                         Param_vol param = paramVolDao.findEnCoursByClasseVol(classeVol.getId_classe_vol());
 
                         if (param == null) {
@@ -52,7 +50,6 @@ public class ReservationVolServlet extends HttpServlet {
                             if (restePlace <= 0) {
                                 req.setAttribute("error", "Plus de places disponibles pour cette classe.");
                             } else {
-                                // Création de l'objet tarifDispo à passer à la JSP
                                 ClasseTarifDispo tarifDispo = new ClasseTarifDispo();
                                 tarifDispo.setClasse(classe);
                                 tarifDispo.setParamVol(param);
@@ -66,7 +63,7 @@ public class ReservationVolServlet extends HttpServlet {
                                 RequestDispatcher dispatcher = req
                                         .getRequestDispatcher("/WEB-INF/views/reservation.jsp");
                                 dispatcher.forward(req, res);
-                                return; // On termine ici après forward
+                                return; 
                             }
                         }
                     }
@@ -75,14 +72,13 @@ public class ReservationVolServlet extends HttpServlet {
                 }
             }
 
-            // Si pas de paramètre ou erreur, afficher la liste des vols
             List<Vol> vols = volDao.findAll();
             req.setAttribute("listes", vols);
             req.getRequestDispatcher("/WEB-INF/views/accueil.jsp").forward(req, res);
 
         } catch (Exception e) {
             e.printStackTrace();
-            req.setAttribute("error", "Erreur lors de la réservation : " + e.getMessage());
+            req.setAttribute("error", "Erreur lors de la reservation : " + e.getMessage());
             out.println("error" + e.getMessage());
             List<Vol> vols;
             try {
