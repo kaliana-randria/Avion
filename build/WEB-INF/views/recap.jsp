@@ -23,6 +23,6 @@
         <p><strong>Paiement :</strong> Non paye</p>
         <p><input type="submit" value="faire Paiement"></p>
     </form>
-    <a href="accueil.jsp">Retour a l accueil</a>
+    <a href="accueil">Retour a l accueil</a>
 </body>
 </html>

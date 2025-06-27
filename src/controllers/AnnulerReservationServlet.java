@@ -20,16 +20,16 @@ public class AnnulerReservationServlet extends HttpServlet {
 
             Enregistrement_reservation enreg = enregDao.findById(idEnregistrement);
             if (enreg == null) {
-                req.setAttribute("error", "Réservation introuvable.");
+                req.setAttribute("error", "Reservation introuvable.");
             } else if (enreg.isEst_annule()) {
-                req.setAttribute("message", "Réservation déjà annulée.");
+                req.setAttribute("message", "Reservation deja annulee.");
             } else {
                 enreg.setEst_annule(true);
                 enregDao.update(enreg);
 
                 Reservation resv = reservationDao.findById(enreg.getId_reservation());
                 if (resv == null) {
-                    req.setAttribute("error", "Réservation liée introuvable.");
+                    req.setAttribute("error", "Reservation liee introuvable.");
                 } else {
                     Param_vol paramAnnule = paramVolDao.findById(resv.getId_param_vol());
 
@@ -46,7 +46,7 @@ public class AnnulerReservationServlet extends HttpServlet {
                         }
                     }
 
-                    req.setAttribute("message", "Réservation annulée avec succès.");
+                    req.setAttribute("message", "Reservation annulee avec succes.");
                 }
             }
 

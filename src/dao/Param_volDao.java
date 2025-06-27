@@ -153,7 +153,6 @@ public class Param_volDao {
         return p;
     }
 
-    // Param_volDao.java
     public Param_vol findById(int id) throws Exception {
         Connection con = Maconnexion.getConnexion();
         String sql = "SELECT * FROM param_vol WHERE id_param_vol = ?";
@@ -191,7 +190,7 @@ public class Param_volDao {
             int updatedRows = pstmt.executeUpdate();
 
             if (updatedRows == 0) {
-                throw new Exception("Aucun param_vol trouvé avec l'id : " + param.getId_param_vol());
+                throw new Exception("Aucun param_vol trouve avec l'id : " + param.getId_param_vol());
             }
         } catch (Exception e) {
             e.printStackTrace();
