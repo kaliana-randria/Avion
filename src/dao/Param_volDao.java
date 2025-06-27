@@ -153,6 +153,48 @@ public class Param_volDao {
         return p;
     }
 
+    public Param_vol findApresEnCoursByClasseVol(int idClasseVol) throws Exception {
+        updateEnCoursParamVol(idClasseVol);
+
+        Connection con = Maconnexion.getConnexion();
+
+        String sql = """
+                    SELECT * FROM param_vol
+                    WHERE id_classe_vol = ?
+                      AND en_cours = false
+                      AND date_limite_paiement > (
+                          SELECT date_limite_paiement
+                          FROM param_vol
+                          WHERE id_classe_vol = ? AND en_cours = true
+                      )
+                    ORDER BY date_limite_paiement ASC
+                    LIMIT 1
+                """;
+
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, idClasseVol);
+        ps.setInt(2, idClasseVol);
+
+        ResultSet rs = ps.executeQuery();
+
+        Param_vol p = null;
+        if (rs.next()) {
+            p = new Param_vol();
+            p.setId_param_vol(rs.getInt("id_param_vol"));
+            p.setId_classe_vol(rs.getInt("id_classe_vol"));
+            p.setPrix(rs.getDouble("prix"));
+            p.setQuantite(rs.getInt("quantite"));
+            p.setDate_limite_paiement(rs.getTimestamp("date_limite_paiement").toLocalDateTime());
+            p.setEn_cours(rs.getBoolean("en_cours"));
+        }
+
+        rs.close();
+        ps.close();
+        con.close();
+
+        return p;
+    }
+
     public Param_vol findById(int id) throws Exception {
         Connection con = Maconnexion.getConnexion();
         String sql = "SELECT * FROM param_vol WHERE id_param_vol = ?";
