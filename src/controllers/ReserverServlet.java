@@ -35,8 +35,14 @@ public class ReserverServlet extends HttpServlet {
             reservation.setEst_payer(false); 
 
             reservationDao.setReserve(reservation);
-            reservationDao.save();  
 
+            // if (quantite <= param.getQuantite()) {
+                
+            // } else if (quantite > param.getQuantite()) {
+                
+            // }
+
+            reservationDao.save();
 
             String numReference = enregDao.generateNextReference();
 

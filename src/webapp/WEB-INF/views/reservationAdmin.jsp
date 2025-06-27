@@ -1,4 +1,4 @@
-<%@ page import="models.*, java.util.List" %>
+<%-- <%@ page import="models.*, java.util.List" %>
 <%
     Vol vol = (Vol) request.getAttribute("volDetail");
     String classe = (String) request.getAttribute("classe");
@@ -100,7 +100,6 @@
             <ul>
                 <li><a href="accueil">Accueil</a></li>
                 <li><a href="panier">Panier_Reservation</a></li>
-                <li><a href="admin">Admin</a></li>
             </ul>
         </nav>
     </header>
@@ -115,7 +114,8 @@
         <p>Classe : <%= classe%></p>
         <input type="hidden" name="idVol" value="<%= vol.getId_vol() %>">
         <input type="hidden" name="idClasse" value="<%= donneesClasse.getId_classe() %>">
-        <p>Nombre personne : <input type="number" name="quantite" min="1"></p>
+        <p>Nombre personne : <input type="number" name="quantite" min="0"></p>
+        <p><input type="checkbox" name="paiement"> Paiement</p>
 
         <p><input type="submit" value="valider"></p>
 
@@ -127,4 +127,4 @@
         </div>
     </footer>
 </body>
-</html>
+</html> --%>
