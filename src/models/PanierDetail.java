@@ -15,6 +15,10 @@ public class PanierDetail {
     private int idEnregistrement;
     private LocalDateTime dateDepart;
     private LocalDateTime dateArrivee;
+    private double tarif;
+
+    public double getTarif() { return tarif; }
+    public void setTarif(double tarif) { this.tarif = tarif; }
 
     public int getIdReservation() {
         return idReservation;

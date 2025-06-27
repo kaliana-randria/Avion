@@ -19,6 +19,7 @@ public class PanierReservationServlet extends HttpServlet {
             ReservationDao reservationDao = new ReservationDao();
             Param_volDao paramDao = new Param_volDao();
             Classe_volDao classeVolDao = new Classe_volDao();
+            ClasseDao classeDao = new ClasseDao(); 
             VolDao volDao = new VolDao();
             AvionDao avionDao = new AvionDao();
             CompagnieDao compagnieDao = new CompagnieDao();
@@ -33,6 +34,7 @@ public class PanierReservationServlet extends HttpServlet {
                 Reservation resv = reservationDao.findById(enr.getId_reservation());
                 Param_vol param = paramDao.findById(resv.getId_param_vol());
                 Classe_vol classeVol = classeVolDao.findById(param.getId_classe_vol());
+                Classe classe = classeDao.findById(classeVol.getId_classe());
                 Vol vol = volDao.findById(classeVol.getId_vol());
                 Avion avion = avionDao.findById(vol.getId_avion());
                 Compagnie compagnie = compagnieDao.findById(avion.getId_compagnie());
@@ -49,6 +51,9 @@ public class PanierReservationServlet extends HttpServlet {
                     detail.setEstPaye(resv.isEst_payer());
                     detail.setIdEnregistrement(enr.getId_enregistrement());
                     detail.setAnnule(enr.isEst_annule());
+                    
+                    detail.setClasse(classe); 
+                    detail.setTarif(param.getPrix());
 
                     panier.add(detail);
                 // }

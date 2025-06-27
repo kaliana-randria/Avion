@@ -154,7 +154,7 @@ public class Param_volDao {
     }
 
     public Param_vol findApresEnCoursByClasseVol(int idClasseVol) throws Exception {
-        updateEnCoursParamVol(idClasseVol);
+        // updateEnCoursParamVol(idClasseVol);
 
         Connection con = Maconnexion.getConnexion();
 
