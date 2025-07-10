@@ -145,7 +145,7 @@
             <% for (ClasseTarifDispo tarifDispo : tarifsDispo) { %>
                 <p>
                     <strong>Classe :</strong> <%= tarifDispo.getClasse().getNom_classe() %><br>
-                    Tarif en cours : <%= tarifDispo.getParamVol().getPrix() %> Ar<br>
+                    Tarif en cours : <%= tarifDispo.getParamVol().getPrix() %> euro<br>
                     Quantite dispo : <%= tarifDispo.getRestePlace() %><br>
                     <a class="btn" href="reservationAdmin?action=<%= tarifDispo.getClasse().getNom_classe() %>&idVol=<%= vol.getId_vol()%>">
                         Reserver en <%= tarifDispo.getClasse().getNom_classe() %>

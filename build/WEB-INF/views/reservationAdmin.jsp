@@ -1,4 +1,4 @@
-<%-- <%@ page import="models.*, java.util.List" %>
+<%@ page import="models.*, java.util.List" %>
 <%
     Vol vol = (Vol) request.getAttribute("volDetail");
     String classe = (String) request.getAttribute("classe");
@@ -104,10 +104,10 @@
         </nav>
     </header>
 
-    <form action="reserver" method="post">
+    <form action="reserverAdmin" method="post">
         <h1>Reservation Vol</h1>
 
-        Tarif en cours : <%= tarifDispo.getParamVol().getPrix() %> Ar<br>
+        Tarif en cours : <%= tarifDispo.getParamVol().getPrix() %> euro<br>
         Quantite dispo : <%= tarifDispo.getRestePlace() %><br>
 
         <p>Vol : <%= vol.getId_vol()%></p>
@@ -127,4 +127,4 @@
         </div>
     </footer>
 </body>
-</html> --%>
+</html>

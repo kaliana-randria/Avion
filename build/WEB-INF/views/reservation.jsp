@@ -108,7 +108,7 @@
     <form action="reserver" method="post">
         <h1>Reservation Vol</h1>
 
-        Tarif en cours : <%= tarifDispo.getParamVol().getPrix() %> Ar<br>
+        Tarif en cours : <%= tarifDispo.getParamVol().getPrix() %> euro<br>
         Quantite dispo : <%= tarifDispo.getRestePlace() %><br>
 
         <p>Vol : <%= vol.getId_vol()%></p>

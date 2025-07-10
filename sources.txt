@@ -37,4 +37,5 @@ src/controllers/RechercheVolServlet.java
 src/controllers/PaiementReservationServlet.java
 src/controllers/Reserver2Servlet.java
 src/controllers/AnnulerReservation2Servlet.java
+src/controllers/ReserverAdmin2Servlet.java
 src/controllers/VolServlet.java

@@ -3,6 +3,7 @@
     Vol vol = (Vol) request.getAttribute("vol");
     Classe classe = (Classe) request.getAttribute("classe");
     int quantite = (Integer) request.getAttribute("quantite");
+    boolean estPaye = request.getAttribute("estPaye") != null && (Boolean) request.getAttribute("estPaye");
     String reference = (String) request.getAttribute("reference");
 %>
 <!DOCTYPE html>
@@ -134,8 +135,16 @@
         <p><strong>Arrivee :</strong> <%= vol.getVille_arrivee() %></p>
         <p><strong>Classe :</strong> <%= classe.getNom_classe() %></p>
         <p><strong>Nombre de personnes :</strong> <%= quantite %></p>
-        <p><strong>Paiement :</strong> Non paye</p>
-        <p><input type="submit" value="faire Paiement"></p>
+        <%-- <p><strong>Paiement :</strong> Non paye</p>
+        <p><input type="submit" value="faire Paiement"></p> --%>
+
+        <% if (estPaye) { %>
+            <p><strong>Paiement :</strong> Deja paye</p>
+        <% } else { %>
+            <p><strong>Paiement :</strong> Non paye</p>
+            <p><input type="submit" value="faire Paiement"></p>
+        <% } %>
+
     </form>
     <a href="accueil">Retour a l accueil</a>
 

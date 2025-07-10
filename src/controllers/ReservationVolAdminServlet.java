@@ -94,6 +94,7 @@ public class ReservationVolAdminServlet extends HttpServlet{
                 req.setAttribute("listes", vols);
                 req.getRequestDispatcher("/WEB-INF/views/homeAdmin.jsp").forward(req, res);
             } catch (Exception e1) {
+                req.setAttribute("error", "Erreur be" + e.getMessage());
                 e1.printStackTrace();
             }
         }
