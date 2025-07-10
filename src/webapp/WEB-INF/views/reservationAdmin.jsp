@@ -1,4 +1,4 @@
-<%-- <%@ page import="models.*, java.util.List" %>
+<%@ page import="models.*, java.util.List" %>
 <%
     Vol vol = (Vol) request.getAttribute("volDetail");
     String classe = (String) request.getAttribute("classe");
@@ -127,4 +127,4 @@
         </div>
     </footer>
 </body>
-</html> --%>
+</html>

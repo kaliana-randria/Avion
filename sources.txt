@@ -31,6 +31,7 @@ src/controllers/DetailVolAdminServlet.java
 src/controllers/PanierReservationServlet.java
 src/controllers/AdminServlet.java
 src/controllers/VolAdminServlet.java
+src/controllers/ReservationVolAdminServlet.java
 src/controllers/FormAjoutVolServlet.java
 src/controllers/RechercheVolServlet.java
 src/controllers/PaiementReservationServlet.java

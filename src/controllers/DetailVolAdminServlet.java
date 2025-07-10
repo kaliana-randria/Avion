@@ -65,19 +65,19 @@ public class DetailVolAdminServlet extends HttpServlet {
                 }
 
                 req.setAttribute("tarifsDispo", tarifsDispo);
-                RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/detailVol.jsp");
+                RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/detailVolAdmin.jsp");
                 dispatcher.forward(req, res);
 
             } else {
                 List<Vol> vols = volDao.findAll();
                 req.setAttribute("listes", vols);
-                req.getRequestDispatcher("/WEB-INF/views/accueil.jsp").forward(req, res);
+                req.getRequestDispatcher("/WEB-INF/views/homeAdmin.jsp").forward(req, res);
             }
 
         } catch (Exception e) {
             req.setAttribute("error", "Erreur : " + e.getMessage());
             e.printStackTrace();
-            req.getRequestDispatcher("/WEB-INF/views/accueil.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/views/homeAdmin.jsp").forward(req, res);
         }
     }
 }
