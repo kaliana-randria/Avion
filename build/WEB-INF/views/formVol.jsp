@@ -1,6 +1,6 @@
 <%@ page import="models.*, java.util.List" %>
 <%
-    List<Statut_vol> statutVols = (List<Statut_vol>) request.getAttribute("statutVol");
+    List<Statut_vol> statutVols = (List<Statut_vol>) request.getAttribute("satutsVol");
     List<Avion> avions = (List<Avion>) request.getAttribute("avions");
     Vol vol = (Vol) request.getAttribute("volToUpdate");
     boolean isUpdate = (vol != null);
@@ -79,12 +79,12 @@
                 <% if (statutVols != null) { %>
                     <% for (Statut_vol statutvol : statutVols) { %>
                         <option value="<%= statutvol.getId_statut_vol() %>"
-                        <%= (isUpdate && vol.getId_statut_vol() == statutvol.getId_statut_vol()) ? "selected" : "" %>>
-                        <%= statutvol.getStatut() %>
-                    </option>
+                            <%= (isUpdate && vol.getId_statut_vol() == statutvol.getId_statut_vol()) ? "selected" : "" %>>
+                            <%= statutvol.getStatut() %>
+                        </option>
                     <% } %>
                 <% } else { %>
-                    <p style="color:red;">Erreur : Aucune liste de statuts chargée</p>
+                    <p style="color:red;">Erreur : Aucune liste de statuts chargee</p>
                 <% } %>
             </select>
         </p>

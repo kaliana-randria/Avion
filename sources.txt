@@ -27,6 +27,7 @@ src/controllers/AnnulerReservationServlet.java
 src/controllers/DetailVolServlet.java
 src/controllers/ReserverServlet.java
 src/controllers/ReservationVolServlet.java
+src/controllers/DetailVolAdminServlet.java
 src/controllers/PanierReservationServlet.java
 src/controllers/AdminServlet.java
 src/controllers/VolAdminServlet.java

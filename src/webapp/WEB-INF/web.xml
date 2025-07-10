@@ -38,6 +38,15 @@
     </servlet-mapping>
 
     <servlet>
+      <servlet-name>DetailAdmiVol</servlet-name>
+      <servlet-class>controllers.DetailVolAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>DetailAdmiVol</servlet-name>
+      <url-pattern>/detailVolAdmin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
       <servlet-name>reservationVol</servlet-name>
       <servlet-class>controllers.ReservationVolServlet</servlet-class>
     </servlet>

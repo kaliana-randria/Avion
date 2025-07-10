@@ -21,5 +21,5 @@ public class Maconnexion {
         }
         return connexion;
     }
-}   
+}
 

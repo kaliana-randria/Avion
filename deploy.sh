@@ -6,7 +6,7 @@ SRC_DIR="src"
 WEB_DIR="src/webapp"
 BUILD_DIR="build"
 LIB_DIR="lib"
-TOMCAT_WEBAPPS="/opt/homebrew/Cellar/tomcat/11.0.6/libexec/webapps"
+TOMCAT_WEBAPPS="/opt/homebrew/Cellar/tomcat/11.0.9/libexec/webapps"
 SERVLET_API_JAR="$LIB_DIR/servlet-api.jar"
 
 # Nettoyage et création du répertoire temporaire

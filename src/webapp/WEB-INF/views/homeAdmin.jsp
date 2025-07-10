@@ -122,7 +122,8 @@
                 <td>
                     <a href="volAdmin?action=tarif&idVol=<%= vol.getId_vol() %>">Tarif</a> |
                     <a href="volAdmin?action=update&idVol=<%= vol.getId_vol() %>">Update</a> |
-                    <a href="volAdmin?action=delete&idVol=<%= vol.getId_vol() %>">Delete</a> 
+                    <a href="volAdmin?action=delete&idVol=<%= vol.getId_vol() %>">Delete</a> |
+                    <a href="detailVolAdmin?action=detail&idVol=<%= vol.getId_vol() %>">Voir details</a>
                 </td>
             </tr>
             <% } %>

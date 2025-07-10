@@ -23,7 +23,7 @@ public class AnnulerReservation2Servlet extends HttpServlet {
             if (enreg == null) {
                 req.setAttribute("error", "Reservation introuvable.");
             } else if (enreg.isEst_annule()) {
-                req.setAttribute("message", "Reservation dejà annulee.");
+                req.setAttribute("message", "Reservation deja annulee.");
             } else {
                 enreg.setEst_annule(true);
                 enregDao.update(enreg);
@@ -59,7 +59,6 @@ public class AnnulerReservation2Servlet extends HttpServlet {
                 }
             }
 
-            // Redirection vers le panier
             resp.sendRedirect(req.getContextPath() + "/panier");
 
         } catch (Exception e) {
