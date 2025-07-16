@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,11 @@ public class VolDao {
     public void setVol(Vol vol) {
         this.vol = vol;
     }
-    
+
     public void save(Connection connection) throws Exception {
-        String sql = "INSERT INTO vol (id_avion, ville_depart, ville_arrivee, date_depart, date_arrivee, duree, id_statut_vol) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO vol (id_avion, ville_depart, ville_arrivee, date_depart, date_arrivee, duree, id_statut_vol) "
+                +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, vol.getId_avion());
@@ -54,7 +56,7 @@ public class VolDao {
             save(connection);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            throw e; 
+            throw e;
         }
     }
 
@@ -88,7 +90,7 @@ public class VolDao {
 
                 VolList.add(vol);
             }
-        
+
             return VolList;
 
         } catch (Exception e) {
@@ -116,24 +118,26 @@ public class VolDao {
 
             if (rs.next()) {
                 vol = new Vol(
-                    rs.getInt("id_vol"),
-                    rs.getInt("id_avion"),
-                    rs.getString("ville_depart"),
-                    rs.getString("ville_arrivee"),
-                    rs.getTimestamp("date_depart").toLocalDateTime(),
-                    rs.getTimestamp("date_arrivee").toLocalDateTime(),
-                    rs.getInt("duree"),
-                    rs.getInt("id_statut_vol")
-                );
+                        rs.getInt("id_vol"),
+                        rs.getInt("id_avion"),
+                        rs.getString("ville_depart"),
+                        rs.getString("ville_arrivee"),
+                        rs.getTimestamp("date_depart").toLocalDateTime(),
+                        rs.getTimestamp("date_arrivee").toLocalDateTime(),
+                        rs.getInt("duree"),
+                        rs.getInt("id_statut_vol"));
             }
             return vol;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
         } finally {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
+            if (rs != null)
+                rs.close();
+            if (stmt != null)
+                stmt.close();
+            if (conn != null)
+                conn.close();
         }
     }
 
@@ -152,14 +156,16 @@ public class VolDao {
             stmt.setTimestamp(5, Timestamp.valueOf(vol.getDate_arrivee()));
             stmt.setInt(6, vol.getId_statut_vol());
             stmt.setInt(7, vol.getId_vol());
-            
+
             stmt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
         } finally {
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
+            if (stmt != null)
+                stmt.close();
+            if (conn != null)
+                conn.close();
         }
     }
 
@@ -172,89 +178,210 @@ public class VolDao {
             connection = Maconnexion.getConnexion();
             pstmt = connection.prepareStatement(sql);
             pstmt.setInt(1, vol.getId_vol());
-            
+
             pstmt.executeUpdate();
             connection.setAutoCommit(false);
             connection.commit();
         } catch (Exception e) {
             connection.rollback();
             System.out.println(e.getMessage());
-            throw e; 
+            throw e;
         } finally {
             pstmt.close();
             connection.close();
         }
     }
 
-    public List<Vol> rechercheMulticritere(Date date_depart, String compagnie, String depart, String arrivee) throws Exception {
-    List<Vol> resultats = new ArrayList<>();
-    Connection con = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
+    public List<Vol> rechercheMulticritere(Date date_depart, String compagnie, String depart, String arrivee)
+            throws Exception {
+        List<Vol> resultats = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
 
-    try {
-        con = Maconnexion.getConnexion();
+        try {
+            con = Maconnexion.getConnexion();
 
-        StringBuilder query = new StringBuilder(
-            "SELECT v.* FROM vol v " +
-            "JOIN avion a ON v.id_avion = a.id_avion " +
-            "JOIN compagnie c ON a.id_compagnie = c.id_compagnie " +
-            "WHERE 1=1"
-        );
+            StringBuilder query = new StringBuilder(
+                    "SELECT v.* FROM vol v " +
+                            "JOIN avion a ON v.id_avion = a.id_avion " +
+                            "JOIN compagnie c ON a.id_compagnie = c.id_compagnie " +
+                            "WHERE 1=1");
 
-        List<Object> params = new ArrayList<>();
+            List<Object> params = new ArrayList<>();
 
-        if (date_depart != null) {
-            query.append(" AND DATE(v.date_depart) = ?");
-            params.add(new java.sql.Date(date_depart.getTime()));
+            if (date_depart != null) {
+                query.append(" AND DATE(v.date_depart) = ?");
+                params.add(new java.sql.Date(date_depart.getTime()));
+            }
+
+            if (compagnie != null && !compagnie.isEmpty()) {
+                query.append(" AND LOWER(c.nom_compagnie) LIKE ?");
+                params.add("%" + compagnie.toLowerCase() + "%");
+            }
+
+            if (depart != null && !depart.isEmpty()) {
+                query.append(" AND LOWER(v.ville_depart) LIKE ?");
+                params.add("%" + depart.toLowerCase() + "%");
+            }
+
+            if (arrivee != null && !arrivee.isEmpty()) {
+                query.append(" AND LOWER(v.ville_arrivee) LIKE ?");
+                params.add("%" + arrivee.toLowerCase() + "%");
+            }
+
+            ps = con.prepareStatement(query.toString());
+
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Vol v = new Vol();
+                v.setId_vol(rs.getInt("id_vol"));
+                v.setVille_depart(rs.getString("ville_depart"));
+                v.setVille_arrivee(rs.getString("ville_arrivee"));
+                v.setDate_depart(rs.getTimestamp("date_depart").toLocalDateTime());
+                v.setDate_arrivee(rs.getTimestamp("date_arrivee").toLocalDateTime());
+                v.setDuree(rs.getInt("duree"));
+                v.setId_statut_vol(rs.getInt("id_statut_vol"));
+                v.setId_avion(rs.getInt("id_avion"));
+                resultats.add(v);
+            }
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (rs != null)
+                rs.close();
+            if (ps != null)
+                ps.close();
+            if (con != null)
+                con.close();
         }
 
-        if (compagnie != null && !compagnie.isEmpty()) {
-            query.append(" AND LOWER(c.nom_compagnie) LIKE ?");
-            params.add("%" + compagnie.toLowerCase() + "%");
-        }
-
-        if (depart != null && !depart.isEmpty()) {
-            query.append(" AND LOWER(v.ville_depart) LIKE ?");
-            params.add("%" + depart.toLowerCase() + "%");
-        }
-
-        if (arrivee != null && !arrivee.isEmpty()) {
-            query.append(" AND LOWER(v.ville_arrivee) LIKE ?");
-            params.add("%" + arrivee.toLowerCase() + "%");
-        }
-
-        ps = con.prepareStatement(query.toString());
-
-        for (int i = 0; i < params.size(); i++) {
-            ps.setObject(i + 1, params.get(i));
-        }
-
-        rs = ps.executeQuery();
-
-        while (rs.next()) {
-            Vol v = new Vol();
-            v.setId_vol(rs.getInt("id_vol"));
-            v.setVille_depart(rs.getString("ville_depart"));
-            v.setVille_arrivee(rs.getString("ville_arrivee"));
-            v.setDate_depart(rs.getTimestamp("date_depart").toLocalDateTime());
-            v.setDate_arrivee(rs.getTimestamp("date_arrivee").toLocalDateTime());
-            v.setDuree(rs.getInt("duree"));
-            v.setId_statut_vol(rs.getInt("id_statut_vol"));
-            v.setId_avion(rs.getInt("id_avion"));
-            resultats.add(v);
-        }
-
-    } catch (Exception e) {
-        throw e;
-    } finally {
-        if (rs != null) rs.close();
-        if (ps != null) ps.close();
-        if (con != null) con.close();
+        return resultats;
     }
 
-    return resultats;
-}
+    public static String convertionMinEnHeure(int minutes) {
+        int heure = minutes / 60;
+        int resteMin = minutes % 60;
 
+        if (heure == 0) {
+            return resteMin + "min";
+        } else if (resteMin == 0) {
+            return heure + "h";
+        } else {
+            return heure + "h " + resteMin + "min";
+        }
+    }
 
+    public double sommeNbrPlaceVol(Vol vol) throws Exception {
+        double somme = 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = Maconnexion.getConnexion();
+            String sql = "SELECT SUM(nbr_place) as total FROM classe_vol WHERE id_vol = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, vol.getId_vol());
+
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                somme = rs.getDouble("total");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erreur lors du calcul de la somme des places: " + e.getMessage());
+            throw new Exception("Erreur d acces a la base de donnees", e);
+        } finally {
+            try {
+                if (rs != null)
+                    rs.close();
+                if (stmt != null)
+                    stmt.close();
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                System.err.println("Erreur lors de la fermeture des ressources: " + e.getMessage());
+            }
+        }
+
+        return somme;
+    }
+
+    public double sommeQuantiteReservationVol(Vol vol) throws Exception {
+        double somme = 0;
+        String sql = "SELECT SUM(r.quantite) as total " +
+                "FROM reservation r " +
+                "JOIN param_vol p ON r.id_param_vol = p.id_param_vol " +
+                "JOIN classe_vol cv ON p.id_classe_vol = cv.id_classe_vol " +
+                "WHERE cv.id_vol = ?";
+
+        try (Connection conn = Maconnexion.getConnexion();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, vol.getId_vol());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    somme = rs.getDouble("total");
+                }
+            }
+        } catch (SQLException e) {
+            throw new Exception("Erreur lors du calcul des reservations", e);
+        }
+
+        return somme;
+    }
+
+    public boolean estVolPlein(Vol vol) throws Exception {
+        double totalPlaces = this.sommeNbrPlaceVol(vol);
+        double totalReservations = this.sommeQuantiteReservationVol(vol);
+
+        return totalPlaces <= totalReservations;
+    }
+
+    public void updateStatutVol(Vol vol) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = Maconnexion.getConnexion();
+
+            if (vol.getDate_depart().isBefore(LocalDateTime.now())) {
+                String sql = "UPDATE vol SET id_statut_vol = 3 WHERE id_vol = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, vol.getId_vol());
+                stmt.executeUpdate(); 
+            } else if (this.estVolPlein(vol)) {
+                String sql = "UPDATE vol SET id_statut_vol = 2 WHERE id_vol = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, vol.getId_vol());
+                stmt.executeUpdate();
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la mise a jour du statut du vol: " + e.getMessage());
+            throw new SQLException("Erreur de mise a jour du statut", e);
+        } finally {
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException e) {
+                System.err.println("Erreur fermeture PreparedStatement: " + e.getMessage());
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                System.err.println("Erreur fermeture Connection: " + e.getMessage());
+            }
+        }
+    }
 }

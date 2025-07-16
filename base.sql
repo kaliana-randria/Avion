@@ -34,10 +34,9 @@ CREATE TABLE statut_vol (
 ); 
 
 INSERT INTO statut_vol (statut) VALUES
-('prevu'),
-('en vol'),
-('termine'),
-('annule');
+('prévu'),
+('plein'),
+('terminé');
 
 CREATE TABLE vol (
     id_vol SERIAL PRIMARY KEY,

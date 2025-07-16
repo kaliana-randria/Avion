@@ -125,6 +125,7 @@
             <ul>
                 <li><a href="accueil">Accueil</a></li>
                 <li><a href="panier">Panier_Reservation</a></li>
+                <li><a href="paiement">Paiement</a></li>
             </ul>
         </nav>
     </header>

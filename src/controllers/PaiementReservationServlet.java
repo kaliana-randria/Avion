@@ -29,4 +29,11 @@ public class PaiementReservationServlet extends HttpServlet {
         RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/paiement.jsp");
         dispatcher.forward(req, res);
     }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+            throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/views/paiement.jsp").forward(req, res);
+    }
+
 }
