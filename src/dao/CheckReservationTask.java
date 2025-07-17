@@ -16,6 +16,8 @@ public class CheckReservationTask extends TimerTask {
 
             List<Enregistrement_reservation> enregistrements = enregDao.findAll();
 
+            LocalDateTime date = LocalDateTime.of(2025, 7, 17, 12, 0);
+
             for (Enregistrement_reservation enr : enregistrements) {
                 if (enr.isEst_annule()) continue;
 
@@ -24,7 +26,8 @@ public class CheckReservationTask extends TimerTask {
 
                 Param_vol param = paramVolDao.findById(resv.getId_param_vol());
 
-                if (param.getDate_limite_paiement().isBefore(LocalDateTime.now())) {
+
+                if (param.getDate_limite_paiement().isBefore(date)) {
                     System.out.println("Annulation automatique : REF " + enr.getNum_reference());
 
                     enr.setEst_annule(true);
