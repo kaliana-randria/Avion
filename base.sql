@@ -8,10 +8,11 @@ CREATE TABLE compagnie (
 
 INSERT INTO compagnie (nom_compagnie) VALUES
 ('Air Madagascar'),
-('Air France'),
-('Turkish Airlines'),
-('Ethiopian Airlines'),
-('Corsair');
+('Air France');
+
+-- ('Turkish Airlines'),
+-- ('Ethiopian Airlines'),
+-- ('Corsair');
 
 CREATE TABLE avion (
     id_avion SERIAL PRIMARY KEY,
@@ -22,11 +23,13 @@ CREATE TABLE avion (
 ); 
 
 INSERT INTO avion (id_compagnie, nom_avion, modele) VALUES
-(1, 'Tsaradia 101', 'ATR 72'),
-(2, 'Airbus A320 AF', 'A320'),
-(3, 'Boeing 737 Turkish', 'B737'),
-(4, 'Dreamliner 787', 'B787'),
-(5, 'Corsair 900', 'A330');
+(1, 'AV001', 'AV001'),
+(2, 'AV002', 'AV002');
+
+-- (3, 'Boeing 737 Turkish', 'B737'),
+-- (4, 'Dreamliner 787', 'B787'),
+-- (5, 'Corsair 900', 'A330');
+
 
 CREATE TABLE statut_vol (
     id_statut_vol SERIAL PRIMARY KEY,
@@ -51,6 +54,11 @@ CREATE TABLE vol (
     FOREIGN KEY (id_statut_vol) REFERENCES statut_vol(id_statut_vol)
 ); 
 
+-- avion	compagnie	ville_depart	ville_arrivee	date_depart	date_arrivee	duree (min)	id_statut_vol	action
+-- AV001	Air Madagascar	Antananarivo	Addis Abeba	2025-07-31T08:00	2025-07-31T12:40	280 ou (4h 40min)	plein	Tarif | Update | Delete | Voir details
+-- AV002	Air France	Paris CDG	Mauritius	2025-08-03T21:00	2025-08-04T08:28	688 ou (11h 28min)	prévu
+
+
 CREATE TABLE classe (
     id_classe SERIAL PRIMARY KEY,
     nom_classe VARCHAR(50)
@@ -58,9 +66,11 @@ CREATE TABLE classe (
 
 INSERT INTO classe (nom_classe) VALUES
 ('Economique'),
-('Business'),
-('First'),
-('VIP');
+('Affaire');
+-- ('First'),
+-- ('VIP');
+
+
 
 CREATE TABLE classe_vol (
     id_classe_vol SERIAL PRIMARY KEY,
@@ -72,11 +82,11 @@ CREATE TABLE classe_vol (
 ); 
 
 INSERT INTO classe_vol (id_vol, id_classe, nbr_place) VALUES
-(1, 1, 100),
-(1, 2, 20),
+(1, 1, 10),
+(1, 2, 5),
 
-(3, 1, 50),
-(3, 2, 15);
+(2, 1, 20),
+(2, 2, 10);
 
 -- (4, 1, 100),
 -- (4, 2, 25);
@@ -101,23 +111,34 @@ CREATE TABLE param_vol (
 ); 
 
 INSERT INTO param_vol (id_classe_vol, prix, quantite, date_limite_paiement) VALUES
-(1, 100, 10, '2025-06-27 07:00:00'),
-(1, 150, 20, '2025-06-28 00:00:00'),
-(1, 200, 15, '2025-06-29 07:00:00'),
-(1, 300, 30, '2025-06-30 07:00:00'),
-(1, 350, 10, '2025-07-01 07:00:00'),
-(1, 400, 15, '2025-07-02 07:00:00'),
+(1, 200, 2, '2025-07-10 07:00:00'),
+(1, 300, 3, '2025-07-16 07:00:00'),
+(1, 500, 5, '2025-07-30 07:00:00'),
 
-(2, 150, 5, '2025-06-27 07:00:00'),
-(2, 300, 15, '2025-06-28 00:00:00'),
+(3, 200, 20, '2025-08-02 07:00:00');
 
-(5, 100, 10, '2025-06-27 07:00:00'),
-(5, 150, 20, '2025-06-28 00:00:00'),
-(5, 200, 15, '2025-06-29 07:00:00'),
-(5, 300, 5, '2025-06-30 07:00:00'),
 
-(6, 150, 10, '2025-06-27 07:00:00'),
-(6, 300, 5, '2025-06-28 00:00:00');
+
+-- (2, 150, 5, '2025-06-27 07:00:00'),
+-- (2, 300, 15, '2025-06-28 00:00:00'),
+
+-- (1, 100, 10, '2025-06-27 07:00:00'),
+-- (1, 150, 20, '2025-06-28 00:00:00'),
+-- (1, 200, 15, '2025-06-29 07:00:00'),
+-- (1, 300, 30, '2025-06-30 07:00:00'),
+-- (1, 350, 10, '2025-07-01 07:00:00'),
+-- (1, 400, 15, '2025-07-02 07:00:00'),
+
+-- (2, 150, 5, '2025-06-27 07:00:00'),
+-- (2, 300, 15, '2025-06-28 00:00:00');
+
+-- (5, 100, 10, '2025-06-27 07:00:00'),
+-- (5, 150, 20, '2025-06-28 00:00:00'),
+-- (5, 200, 15, '2025-06-29 07:00:00'),
+-- (5, 300, 5, '2025-06-30 07:00:00'),
+
+-- (6, 150, 10, '2025-06-27 07:00:00'),
+-- (6, 300, 5, '2025-06-28 00:00:00');
 
 -- (7, 100, 10, '2025-07-10 07:00:00'),
 -- (7, 150, 20, '2025-07-12 00:00:00'),
@@ -163,6 +184,17 @@ CREATE TABLE reservation (
     FOREIGN KEY (id_param_vol) REFERENCES param_vol(id_param_vol)
 ); 
 
+INSERT INTO reservation(date_reservation, id_param_vol, quantite, est_payer) VALUES
+('2025-07-09 07:00:00', 1, 1, TRUE);
+
+-- ('2025-07-04 07:00:00', 1, 1, TRUE);
+
+-- ('2025-07-13 07:00:00', 2, 1, TRUE);
+
+-- ('2025-07-14 07:00:00', 2, 1, FALSE);
+
+-- ('2025-07-15 07:00:00', 2, 1, TRUE);
+
 CREATE TABLE enregistrement_reservation (
     id_enregistrement SERIAL PRIMARY KEY,
     id_reservation INT,
@@ -170,6 +202,13 @@ CREATE TABLE enregistrement_reservation (
     est_annule BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (id_reservation) REFERENCES reservation(id_reservation)
 );
+
+INSERT INTO enregistrement_reservation(id_reservation, num_reference) VALUES
+(1, 'REF0001'),
+(2, 'REF0002'),
+(3, 'REF0003'),
+(4, 'REF0004'),
+(5, 'REF0005');
 
 CREATE TABLE admin (
     id_admin SERIAL PRIMARY KEY,
@@ -180,3 +219,17 @@ CREATE TABLE admin (
 
 INSERT INTO admin (nom, email, mdp) VALUES
 ('Admin', 'admin@gmail.com', 'admin123');
+
+
+-- TRUNCATE TABLE 
+--     enregistrement_reservation,
+--     reservation,
+--     param_vol,
+--     classe_vol,
+--     vol,
+--     avion,
+--     compagnie,
+--     statut_vol,
+--     classe,
+--     admin
+-- RESTART IDENTITY CASCADE;

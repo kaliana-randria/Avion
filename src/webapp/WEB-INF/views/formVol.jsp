@@ -38,7 +38,7 @@
             Ville de depart :
             <select name="ville_depart" required>
                 <option value=""></option>
-                <% String[] villes = {"Antananarivo", "Paris", "Tulear"};
+                <% String[] villes = {"Antananarivo", "Paris CDG", "Mauritius", "Addis Abeba"};
                    for (String ville : villes) {
                        boolean selected = isUpdate && ville.equals(vol.getVille_depart());
                 %>
@@ -51,7 +51,7 @@
             Ville d arrivee :
             <select name="ville_arrivee" required>
                 <option value=""></option>
-                <% String[] villesArr = {"Paris", "Antananarivo", "Tamatave"};
+                <% String[] villesArr = {"Antananarivo", "Paris CDG", "Mauritius", "Addis Abeba"};
                    for (String ville : villesArr) {
                        boolean selected = isUpdate && ville.equals(vol.getVille_arrivee());
                 %>

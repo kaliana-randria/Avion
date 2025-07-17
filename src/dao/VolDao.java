@@ -380,8 +380,10 @@ public class VolDao {
     public boolean estVolPlein(Vol vol) throws Exception {
         double totalPlaces = this.sommeNbrPlaceVol(vol);
         double totalReservations = this.sommeQuantiteReservationVol(vol);
+        double valeur = totalPlaces - totalReservations;
 
-        return totalPlaces <= totalReservations;
+        // return totalPlaces <= totalReservations;
+        return valeur == 0;
     }
 
     public void updateStatutVol(Vol vol) throws SQLException {
