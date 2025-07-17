@@ -239,4 +239,23 @@ public class Param_volDao {
             throw e;
         }
     }
+
+    public int getTotalQuantite(int idClasseVol) throws Exception {
+        Connection c = Maconnexion.getConnexion();
+        String sql = "SELECT COALESCE(SUM(quantite), 0) FROM param_vol WHERE id_classe_vol = ?";
+        PreparedStatement ps = c.prepareStatement(sql);
+        ps.setInt(1, idClasseVol);
+        ResultSet rs = ps.executeQuery();
+
+        int total = 0;
+        if (rs.next()) {
+            total = rs.getInt(1);
+        }
+
+        rs.close();
+        ps.close();
+        c.close();
+        return total;
+    }
+
 }

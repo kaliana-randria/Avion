@@ -41,6 +41,9 @@ public class Reserver2Servlet extends HttpServlet {
                 reservationDao.setReserve(reservation);
                 reservationDao.save();
 
+                param.setQuantite(param.getQuantite() - aPrendre);
+                paramVolDao.updateQuantite(param);
+
                 String numReference = enregDao.generateNextReference();
                 for (int i = 0; i < reservation.getQuantite(); i++) {
                     Enregistrement_reservation enregistrement = new Enregistrement_reservation();
@@ -68,6 +71,9 @@ public class Reserver2Servlet extends HttpServlet {
 
                 reservationDao.setReserve(reservation2);
                 reservationDao.save();
+
+                param.setQuantite(param.getQuantite() - reste);
+                paramVolDao.updateQuantite(param);
 
                 String numReference2 = enregDao.generateNextReference(); 
 

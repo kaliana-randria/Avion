@@ -1,6 +1,10 @@
 <%@ page import="models.*, java.util.List" %>
 <%
     List<Vol> listVol = (List<Vol>) request.getAttribute("listes");
+    List<Avion> listAvions = (List<Avion>) request.getAttribute("listAvions");
+    List<Compagnie> listCompagnies = (List<Compagnie>) request.getAttribute("listCompagnies");
+    List<Statut_vol> listStatuts = (List<Statut_vol>) request.getAttribute("listStatuts");
+    List<String> listHeures = (List<String>) request.getAttribute("listHeures");
 %>
 
 <!DOCTYPE html>
@@ -102,7 +106,8 @@
     <h2>Les Vol</h2>
         <table border='1'>
             <tr>
-                <th>id_avion</th>
+                <th>avion</th>
+                <th>compagnie</th>
                 <th>ville_depart</th>
                 <th>ville_arrivee</th>
                 <th>date_depart</th>
@@ -111,15 +116,22 @@
                 <th>id_statut_vol</th>
                 <th>action</th>
             </tr>
-            <% for (Vol vol : listVol) { %>
+            <% for (int i = 0; i < listVol.size(); i++) { 
+                Vol vol = listVol.get(i);
+                Avion avion = listAvions.get(i);
+                Compagnie compagnie = listCompagnies.get(i);
+                Statut_vol statut = listStatuts.get(i);
+                String heure = listHeures.get(i);
+            %>
             <tr>
-                <td><%= vol.getId_avion() %></td>
-                <td><%= vol.getVille_depart()%></td>
-                <td><%= vol.getVille_arrivee()%></td>
-                <td><%= vol.getDate_depart()%></td>
-                <td><%= vol.getDate_arrivee()%></td>
-                <td><%= vol.getDuree() %></td>
-                <td><%= vol.getId_statut_vol()%></td>
+                <td><%= avion.getNom_avion() %></td>
+                <td><%= compagnie.getNom_compagnie() %></td>
+                <td><%= vol.getVille_depart() %></td>
+                <td><%= vol.getVille_arrivee() %></td>
+                <td><%= vol.getDate_depart() %></td>
+                <td><%= vol.getDate_arrivee() %></td>
+                <td><%= vol.getDuree() %> ou (<%= heure %>)</td>
+                <td><%= statut.getStatut() %></td>
                 <td>
                     <a href="volAdmin?action=tarif&idVol=<%= vol.getId_vol() %>">Tarif</a> |
                     <a href="volAdmin?action=update&idVol=<%= vol.getId_vol() %>">Update</a> |

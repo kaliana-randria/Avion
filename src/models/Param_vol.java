@@ -9,6 +9,12 @@ public class Param_vol {
     private int quantite;
     private LocalDateTime date_limite_paiement;
     private boolean en_cours;
+    public Param_vol(int id_classe_vol, double prix, int quantite, LocalDateTime date_limite_paiement) {
+        this.id_classe_vol = id_classe_vol;
+        this.prix = prix;
+        this.quantite = quantite;
+        this.date_limite_paiement = date_limite_paiement;
+    }
     public Param_vol(int id_classe_vol) {
         this.id_classe_vol = id_classe_vol;
     }

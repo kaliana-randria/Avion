@@ -90,11 +90,6 @@
             padding: 1rem;
             margin-top: 2rem;
         }
-
-        .termine {
-            color: gray;
-            font-style: italic;
-        }
     </style>
 </head>
 <body>
@@ -147,7 +142,6 @@
                     <td><%= vol.getDuree() %> ou (<%= heure %>)</td>
                     <td><%= statut.getStatut() %></td>
                     <td><a href="detailVol?action=detail&idVol=<%= vol.getId_vol() %>">Voir details</a></td>
-
                 </tr>
             <% } %>
         </table>

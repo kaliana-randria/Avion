@@ -117,6 +117,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>TarifVol</servlet-name>
+    <servlet-class>controllers.FormTarifVolServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TarifVol</servlet-name>
+    <url-pattern>/ajoutTarif</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>paiementReservation</servlet-name>
     <servlet-class>controllers.PaiementReservationServlet</servlet-class>
   </servlet>

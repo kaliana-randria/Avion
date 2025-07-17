@@ -11,7 +11,7 @@
     <title>Home Admin</title>
 </head>
 <body>
-    <p><a href="ajoutTarif">Ajouter tarif</a></p>
+    <p><a href="ajoutTarif?idVol=<%= vol.getId_vol() %>">Ajouter tarif</a></p>
     <h2>Les Tarifs</h2>
         <table border='1'>
             <tr>
@@ -26,8 +26,8 @@
                 <td><%= tarif.getPrix()%></td>
                 <td><%= tarif.getDate_limite_paiement()%></td>
                 <td>
-                    <a href="tarifAdmin?action=update&idTarif=<%= tarif.getId_classe_vol() %>">Update</a> |
-                    <a href="tarifAdmin?action=delete&idTarif=<%= tarif.getId_classe_vol() %>">Delete</a> 
+                    <a href="tarifAdmin?action=update&idTarif=<%= tarif.getId_param_vol() %>&idVol=<%= vol.getId_vol() %>">Update</a> |
+                    <a href="tarifAdmin?action=delete&idTarif=<%= tarif.getId_param_vol() %>&idVol=<%= vol.getId_vol() %>">Delete</a>
                 </td>
             </tr>
             <% } %>

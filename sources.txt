@@ -30,6 +30,7 @@ src/controllers/ReservationVolServlet.java
 src/controllers/DetailVolAdminServlet.java
 src/controllers/PanierReservationServlet.java
 src/controllers/AdminServlet.java
+src/controllers/TarifAdminServlet.java
 src/controllers/VolAdminServlet.java
 src/controllers/ReservationVolAdminServlet.java
 src/controllers/FormAjoutVolServlet.java
@@ -39,3 +40,4 @@ src/controllers/Reserver2Servlet.java
 src/controllers/AnnulerReservation2Servlet.java
 src/controllers/ReserverAdmin2Servlet.java
 src/controllers/VolServlet.java
+src/controllers/FormTarifVolServlet.java

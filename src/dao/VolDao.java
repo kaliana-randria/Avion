@@ -170,25 +170,62 @@ public class VolDao {
     }
 
     public void delete() throws Exception {
-        PreparedStatement pstmt = null;
         Connection connection = null;
-        String sql = "DELETE FROM vol WHERE id_vol = ?";
-
         try {
             connection = Maconnexion.getConnexion();
-            pstmt = connection.prepareStatement(sql);
-            pstmt.setInt(1, vol.getId_vol());
-
-            pstmt.executeUpdate();
             connection.setAutoCommit(false);
+
+            String sqlEnregistrement = "DELETE FROM enregistrement_reservation WHERE id_reservation IN " +
+                    "(SELECT r.id_reservation FROM reservation r " +
+                    "JOIN param_vol p ON r.id_param_vol = p.id_param_vol " +
+                    "JOIN classe_vol c ON p.id_classe_vol = c.id_classe_vol " +
+                    "WHERE c.id_vol = ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(sqlEnregistrement)) {
+                stmt.setInt(1, vol.getId_vol());
+                stmt.executeUpdate();
+            }
+
+            String sqlReservation = "DELETE FROM reservation WHERE id_param_vol IN " +
+                    "(SELECT p.id_param_vol FROM param_vol p " +
+                    "JOIN classe_vol c ON p.id_classe_vol = c.id_classe_vol " +
+                    "WHERE c.id_vol = ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(sqlReservation)) {
+                stmt.setInt(1, vol.getId_vol());
+                stmt.executeUpdate();
+            }
+
+            String sqlParam = "DELETE FROM param_vol WHERE id_classe_vol IN " +
+                    "(SELECT id_classe_vol FROM classe_vol WHERE id_vol = ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(sqlParam)) {
+                stmt.setInt(1, vol.getId_vol());
+                stmt.executeUpdate();
+            }
+
+            String sqlClasse = "DELETE FROM classe_vol WHERE id_vol = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(sqlClasse)) {
+                stmt.setInt(1, vol.getId_vol());
+                stmt.executeUpdate();
+            }
+
+            String sqlVol = "DELETE FROM vol WHERE id_vol = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(sqlVol)) {
+                stmt.setInt(1, vol.getId_vol());
+                int rowsDeleted = stmt.executeUpdate();
+                if (rowsDeleted == 0) {
+                    throw new SQLException("Aucun vol trouvé avec cet ID");
+                }
+            }
+
             connection.commit();
         } catch (Exception e) {
-            connection.rollback();
-            System.out.println(e.getMessage());
-            throw e;
+            if (connection != null) {
+                connection.rollback();
+            }
+            throw new Exception("Erreur lors de la suppression du vol: " + e.getMessage(), e);
         } finally {
-            pstmt.close();
-            connection.close();
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
 
@@ -358,7 +395,7 @@ public class VolDao {
                 String sql = "UPDATE vol SET id_statut_vol = 3 WHERE id_vol = ?";
                 stmt = conn.prepareStatement(sql);
                 stmt.setInt(1, vol.getId_vol());
-                stmt.executeUpdate(); 
+                stmt.executeUpdate();
             } else if (this.estVolPlein(vol)) {
                 String sql = "UPDATE vol SET id_statut_vol = 2 WHERE id_vol = ?";
                 stmt = conn.prepareStatement(sql);
