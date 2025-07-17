@@ -8,7 +8,7 @@ import connection.Maconnexion;
 import models.Admin;
 
 public class AdminDao {
-        public boolean login(Admin admin) throws Exception {
+    public boolean login(Admin admin) throws Exception {
         Connection connection = Maconnexion.getConnexion();
         String sql = "SELECT * FROM admin WHERE email = ? AND mdp = ?";
         PreparedStatement pst = connection.prepareStatement(sql);
