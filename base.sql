@@ -87,6 +87,9 @@ INSERT INTO classe_vol (id_vol, id_classe, nbr_place) VALUES
 -- (7, 1, 50),
 -- (7, 2, 20);
 
+-- (8, 1, 50),
+-- (8, 2, 20);
+
 CREATE TABLE param_vol (
     id_param_vol SERIAL PRIMARY KEY,
     id_classe_vol INT,
@@ -142,6 +145,14 @@ INSERT INTO param_vol (id_classe_vol, prix, quantite, date_limite_paiement) VALU
 
 -- (12, 150, 10, '2025-07-10 13:55:00'),
 -- (12, 300, 10, '2025-07-12 00:00:00');
+
+-- (13, 100, 10, '2025-07-18 13:55:00'),
+-- (13, 150, 20, '2025-07-19 00:00:00'),
+-- (13, 200, 15, '2025-07-20 07:00:00'),
+-- (13, 300, 5, '2025-07-21 07:00:00'),
+
+-- (14, 150, 10, '2025-07-18 13:55:00'),
+-- (14, 300, 10, '2025-07-19 00:00:00');
 
 CREATE TABLE reservation (
     id_reservation SERIAL PRIMARY KEY,

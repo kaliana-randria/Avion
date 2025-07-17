@@ -126,6 +126,7 @@
                 <li><a href="accueil">Accueil</a></li>
                 <li><a href="panier">Panier_Reservation</a></li>
                 <li><a href="paiement">Paiement</a></li>
+                <li><a href="affaireVol">Chiffre_Affaire_Vol</a></li>
             </ul>
         </nav>
     </header>
