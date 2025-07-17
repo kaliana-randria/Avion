@@ -20,13 +20,13 @@ public class AffaireVolServlet extends HttpServlet {
             VolDao volDao = new VolDao();
             List<Vol> vols = volDao.findAll();
             req.setAttribute("listes", vols);
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/numVol.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/chiffreVol.jsp");
             dispatcher.forward(req, res);
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("message", "Erreur : " + e.getMessage());
             out.println("error" + e.getMessage());
-            req.getRequestDispatcher("/WEB-INF/views/numVol.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/views/chiffreVol.jsp").forward(req, res);
         }
     }
 }

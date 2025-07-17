@@ -258,4 +258,24 @@ public class Param_volDao {
         return total;
     }
 
+    public double getTotalBrutParVol(int idVol) {
+        String sql = """
+                    SELECT SUM(p.prix * p.quantite)
+                    FROM param_vol p
+                    JOIN classe_vol cv ON p.id_classe_vol = cv.id_classe_vol
+                    WHERE cv.id_vol = ?
+                """;
+
+        try (Connection conn = Maconnexion.getConnexion();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idVol);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next())
+                return rs.getDouble(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

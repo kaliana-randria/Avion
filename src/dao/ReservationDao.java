@@ -84,4 +84,33 @@ public class ReservationDao {
         return r;
     }
 
+    public double getChiffreAffaireParVol(int idVol) throws Exception {
+        double total = 0.0;
+
+        Connection conn = Maconnexion.getConnexion();
+
+        String sql = """
+                    SELECT SUM(r.quantite * pv.prix) AS total
+                    FROM reservation r
+                    JOIN param_vol pv ON r.id_param_vol = pv.id_param_vol
+                    JOIN classe_vol cv ON pv.id_classe_vol = cv.id_classe_vol
+                    JOIN vol v ON cv.id_vol = v.id_vol
+                    WHERE r.est_payer = TRUE AND v.id_vol = ?
+                """;
+
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, idVol);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            total = rs.getDouble("total");
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return total;
+    }
+
 }

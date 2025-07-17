@@ -162,13 +162,21 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>chiffreAffaireVol</servlet-name>
+    <servlet-name>formAffaireVol</servlet-name>
     <servlet-class>controllers.AffaireVolServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>chiffreAffaireVol</servlet-name>
+    <servlet-name>formAffaireVol</servlet-name>
     <url-pattern>/affaireVol</url-pattern>
   </servlet-mapping>
 
-</web-app>
+  <servlet>
+    <servlet-name>chiffreAffaireVol</servlet-name>
+    <servlet-class>controllers.ChiffreAffaireVolServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>chiffreAffaireVol</servlet-name>
+    <url-pattern>/numVol</url-pattern>
+  </servlet-mapping>
 
+</web-app>

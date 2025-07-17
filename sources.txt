@@ -42,3 +42,4 @@ src/controllers/AnnulerReservation2Servlet.java
 src/controllers/ReserverAdmin2Servlet.java
 src/controllers/VolServlet.java
 src/controllers/FormTarifVolServlet.java
+src/controllers/ChiffreAffaireVolServlet.java
